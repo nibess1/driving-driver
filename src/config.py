@@ -1,28 +1,31 @@
+from typing import Optional
+
 from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings
-from typing import Optional
+from pydantic import ConfigDict  # or: from pydantic import ConfigDict  in newer packaging
 
 
 class Settings(BaseSettings):
-    portal_user: str = Field(..., env="PORTAL_USER")
-    portal_pass: SecretStr = Field(..., env="PORTAL_PASS")
-    portal_totp_secret: Optional[SecretStr] = Field(None, env="PORTAL_TOTP_SECRET")
+    portal_user: str
+    portal_pass: SecretStr
+    portal_totp_secret: Optional[SecretStr] = None
 
-    tg_bot_token: str = Field(..., env="TG_BOT_TOKEN")
-    tg_chat_id: str = Field(..., env="TG_CHAT_ID")
+    tg_bot_token: str
+    tg_chat_id: str
 
-    poll_min_seconds: int = Field(120, env="POLL_MIN_SECONDS")
-    poll_max_seconds: int = Field(240, env="POLL_MAX_SECONDS")
+    poll_min_seconds: int = 120
+    poll_max_seconds: int = 240
 
-    headless: bool = Field(True, env="HEADLESS")
-    enable_metrics: bool = Field(True, env="ENABLE_METRICS")
-    state_file: str = Field("./state.json", env="STATE_FILE")
+    headless: bool = True
+    enable_metrics: bool = True
+    state_file: str = "./state.json"
 
-    log_level: str = Field("INFO", env="LOG_LEVEL")
+    log_level: str = "INFO"
 
-    class Config:
-        env_file = ".env"
-        case_sensitive = False
+    model_config = ConfigDict(
+        env_file=".env",
+        case_sensitive=False,
+    )
 
 
 settings = Settings()

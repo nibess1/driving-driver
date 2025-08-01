@@ -1,6 +1,6 @@
 from telegram import Bot
 from telegram.error import TelegramError
-from .config import settings
+from config import settings
 from loguru import logger
 
 
