@@ -1,3 +1,4 @@
+#stealth.py
 from scipy import interpolate
 from playwright.sync_api import Page
 import numpy as np
